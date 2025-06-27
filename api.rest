@@ -6,8 +6,21 @@ POST http://localhost:8000/Aprendiz
 Content-Type: application/json
 
 {
-    "nombre":"Cristian",
-    "apellido":"Garcia",
-    "email":"cris@gmail.com",
+    "nombre":"Julian",
+    "apellido":"Chaparro",
+    "email":"jc@gmail.com",
     "telefono":"31243111"
+}
+
+###
+
+PUT http://localhost:8000/Aprendiz
+Content-Type: application/json
+
+{
+    "idaprendiz":"4",
+    "nombre":"cr7",
+    "apellido":"sdf",
+    "email":"jcddd@gmail.com",
+    "telefono":"41243111"
 }
