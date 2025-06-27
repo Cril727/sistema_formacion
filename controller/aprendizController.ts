@@ -8,7 +8,7 @@ export const getAprendiz = async (ctx:Context)=>{
     try {
 
         const objUsuario = new Aprendiz();
-        const ListaUsuarios = await objUsuario.listarUsuarios()
+        const ListaUsuarios = await objUsuario.listarAprendices()
 
         if(!ListaUsuarios || ListaUsuarios.length === 0){
             response.status = 400;
@@ -42,5 +42,15 @@ export const getAprendiz = async (ctx:Context)=>{
                 error: String(error)
             }
         }
+    }
+}
+
+export const postUser = async (ctx:Context)=>{
+    const {request, response} = ctx;
+
+    try {
+        
+    } catch (error) {
+        
     }
 }

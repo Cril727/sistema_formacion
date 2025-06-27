@@ -16,7 +16,7 @@ export class Aprendiz{
         this._objAprendiz = ObjAprendiz
     }
 
-    public async listarUsuarios():Promise<AprendizData[]>{
+    public async listarAprendices():Promise<AprendizData[]>{
         
         try {
             const result = await Conexion.execute("SELECT * FROM aprendiz")
@@ -31,6 +31,12 @@ export class Aprendiz{
             console.error("Error al seleccionaer usuario"+error);
             throw new Error("No se pueden obtener los datos")
         }
+    }
+
+
+
+    public async agregarAprendiz(){
+        
     }
 
 }
