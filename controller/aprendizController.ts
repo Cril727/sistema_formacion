@@ -52,7 +52,7 @@ export const getAprendiz = async (ctx:Context)=>{
     }
 }
 
-export const postUser = async (ctx:Context)=>{
+export const postAprendiz = async (ctx:Context)=>{
     const {request, response} = ctx;
 
     try {
@@ -106,6 +106,66 @@ export const postUser = async (ctx:Context)=>{
             response.body = {
                 success:false,
                 message:"Datos invalidos",
+            }
+        }
+    }
+}
+
+
+export const putAprendiz = async(ctx:Context)=>{
+    const {response, request} = ctx;
+
+    try {
+
+        const contenLen = request.headers.get("Content-Length");
+
+        if(contenLen === "0"){
+            response.status = 400;
+            response.body = {
+                success:false,
+                message:"Cuerpo de la solicitud vacia"
+            };
+            return;
+        }
+
+        const body = await request.body.json();
+        const validated = AprendizSchema.parse(body);
+
+        const aprendizData = {
+            idaprendiz: body.idaprendiz,
+            ...validated
+        }
+
+        const objAprendiz = new Aprendiz(aprendizData);
+        const update = await objAprendiz.actualizarAprendiz();
+
+        if(update.success){
+            response.status = 200
+            response.body = {
+                success:true,
+                message:"Actualizado Correctamente",
+                aprendiz:update.aprendiz
+            }
+        }else{
+            response.status = 400,
+            response.body = {
+                success:false,
+                message:"Error al actualizar el usuario" + update.message
+            }
+        }
+    } catch (error) {
+        if(error instanceof z.ZodError){
+            response.status = 400;
+            response.body = {
+                success: false,
+                message: "Error de seervidor datos invalidos",
+                errors: error.format()
+            }
+        }else{
+            response.status = 500;
+            response.body = {
+                success: false,
+                message: "Error de servidor"
             }
         }
     }
