@@ -1,0 +1,13 @@
+GET http://localhost:8000/Aprendiz
+
+
+###
+POST http://localhost:8000/Aprendiz
+Content-Type: application/json
+
+{
+    "nombre":"Cristian",
+    "apellido":"Garcia",
+    "email":"cris@gmail.com",
+    "telefono":"31243111"
+}
