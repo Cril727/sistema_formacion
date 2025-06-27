@@ -1,4 +1,4 @@
-import { Context, z } from "../dependencies/dependencies.ts";
+import { Context, z, RouterContext } from "../dependencies/dependencies.ts";
 import { Aprendiz } from "../model/aprendizModel.ts";
 
 const AprendizSchema = z.object({
@@ -166,6 +166,57 @@ export const putAprendiz = async(ctx:Context)=>{
             response.body = {
                 success: false,
                 message: "Error de servidor"
+            }
+        }
+    }
+}
+
+
+export const deleteAprendiz = async (ctx:RouterContext<"/Aprendiz/:id">) =>{
+    const {params, response} = ctx;
+
+    try {
+        const idaprendiz = parseInt(params.id);
+
+        if(!idaprendiz || idaprendiz <= 0){
+            response.status = 400
+            response.body = {
+                success:false,
+                message:"ID del usuario es invalido"
+            };
+
+            return;
+        }
+
+        const objAprendiz = new Aprendiz();
+        const eliminar = await objAprendiz.eliminarAprendiz(idaprendiz);
+
+        if(eliminar.success){
+            response.status = 200;
+            response.body = {
+                success: true,
+                message: "Usuario elminado correctamente"
+            }
+        }else{
+            response.status = 400;
+            response.body = {
+                success: false,
+                message: "Erro al eliminar el usuario" + eliminar.message
+            }
+        }
+
+    } catch (error) {
+        if(error instanceof Error){
+            response.status = 500;
+            response.body = {
+                success: false,
+                message: "Error interno del servidor" + error.message
+            }
+        }else{
+            response.status = 500;
+            response.body = {
+                success: false,
+                message: "Error interno del servidor"
             }
         }
     }

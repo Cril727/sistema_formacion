@@ -126,4 +126,37 @@ export class Aprendiz {
         }
     }
 
+
+    public async eliminarAprendiz(idaprendiz:number):Promise<{success:boolean, message:string}>{
+        try {
+            await Conexion.execute("START TRANSACTION");
+
+            const eliminar = await Conexion.execute("DELETE FROM aprendiz WHERE idaprendiz = ?",[idaprendiz])
+
+            if(eliminar && typeof eliminar.affectedRows === "number" && eliminar.affectedRows>0){
+                await Conexion.execute("COMMIT");
+
+                return{
+                    success:true,
+                    message:"Aprendiz eliminado correctamente",
+                }
+            }else{
+                throw new Error("Erro al  eliminar el usuario")
+            }
+        } catch (error) {
+            await Conexion.execute("ROLLBACK");
+            if(error instanceof Error){
+                return{
+                    success:false,
+                    message:error.message
+                }
+            }else{
+                return{
+                    success:false,
+                    message:"Error interno del servidor"
+                }
+            }
+        }
+    }
+
 }
