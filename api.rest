@@ -2,14 +2,15 @@ GET http://localhost:8000/Ficha
 
 
 ###
-POST http://localhost:8000/Aprendiz
+POST http://localhost:8000/Ficha
 Content-Type: application/json
 
 {
-    "nombre":"Julian",
-    "apellido":"Chaparro",
-    "email":"jc@gmail.com",
-    "telefono":"31243111"
+     "codigo": "FICHA001",
+  "fecha_inicio_lectiva": "2025-07-01",
+  "fecha_fin_lectiva": "2025-12-15",
+  "fecha_fin_practica": "2026-01-30",
+  "programa_idprograma": "1"
 }
 
 ###
