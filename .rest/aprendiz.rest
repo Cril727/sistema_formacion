@@ -1,4 +1,4 @@
-GET http://localhost:8000/Aprendiz
+GET http://localhost:8000/Aprendices
 
 
 ###
@@ -17,7 +17,7 @@ PUT http://localhost:8000/Aprendiz
 Content-Type: application/json
 
 {
-    "idaprendiz":"4",
+    "idaprendiz":"5",
     "nombre":"cr7",
     "apellido":"sdf",
     "email":"jcddd@gmail.com",
@@ -26,4 +26,4 @@ Content-Type: application/json
 
 
 ###
-DELETE  http://localhost:8000/Aprendiz/1
+DELETE  http://localhost:8000/Aprendiz/5
