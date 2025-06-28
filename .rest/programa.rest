@@ -1,0 +1,9 @@
+GET http://localhost:8000/programas
+
+###
+POST http://localhost:8000/programa
+Content-Type: application/json
+
+{
+    "nombre_programa":"ADSO"
+}

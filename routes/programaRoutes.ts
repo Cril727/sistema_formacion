@@ -1,13 +1,13 @@
-import { getProgramas } from "../controller/programaController.ts";
+import { getProgramas, postPrograma } from "../controller/programaController.ts";
 import { Router } from "../dependencies/dependencies.ts";
 
 
-const programaRouter = new Router();
+const ProgramaRouter = new Router();
 
-programaRouter.get("/programa",getProgramas)
-programaRouter.post("/programa",()=>{})
-programaRouter.put("/programa",()=>{})
-programaRouter.delete("/programa",()=>{})
+ProgramaRouter.get("/programas",getProgramas)
+ProgramaRouter.post("/programa",postPrograma)
+ProgramaRouter.put("/programa",()=>{})
+ProgramaRouter.delete("/programa",()=>{})
 
 
-export {programaRouter}
+export {ProgramaRouter}

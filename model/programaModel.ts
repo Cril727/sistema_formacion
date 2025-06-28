@@ -30,4 +30,46 @@ export class Programa{
             throw new Error("No se pueden traer los datos")
         }
     }
+
+
+    public async agregarPrograma():Promise<{success:boolean, message:string, programa?: Record <string,unknown>}>{
+        try {
+            
+            if(!this._objPrograma){
+                throw new Error("Objeto no valido")
+            }
+
+            const {nombre_programa} = this._objPrograma;
+
+            await Conexion.execute("START TRANSACTION")
+            const sql = await Conexion.execute("INSERT INTO programa (nombre_programa) values (?)",[nombre_programa])
+
+            if(sql && typeof sql.affectedRows === "number" && sql.affectedRows >0){
+                const [programa] = await Conexion.query("SELECT * FROM programa WHERE idprograma = LAST_INSERT_ID()",)
+
+                await Conexion.execute("COMMIT");
+
+                return{
+                    success:true,
+                    message:"Programa agregado correctamento",
+                    programa: programa
+                }
+            }else{
+                throw new Error("Error al agregar el programa")
+            }
+        } catch (error) {
+            await Conexion.execute("ROLLBACK")
+            if(error instanceof Error){
+                return{
+                    success:false,
+                    message:error.message
+                }
+            }else{
+                return{
+                    success:false,
+                    message:"Error interno del servidor"
+                }
+            }
+        }
+    }
 }
