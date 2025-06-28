@@ -11,9 +11,6 @@ const FichaSchema = z.object({
 })
 
 
-
-
-
 export const getFicha = async (ctx:Context)=>{
     const {response} = ctx;
 
