@@ -26,7 +26,7 @@ export class Programa{
             return result.rows as ProgramaData[];
 
         } catch (error) {
-            console.log("Error al traer los datos");
+            console.log("Error al traer los datos" + error);
             throw new Error("No se pueden traer los datos")
         }
     }
