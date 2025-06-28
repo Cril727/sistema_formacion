@@ -1,4 +1,4 @@
-GET http://localhost:8000/Aprendiz
+GET http://localhost:8000/Ficha
 
 
 ###
