@@ -5,7 +5,7 @@ GET http://localhost:8000/Aprendiz
 GET http://localhost:8000/Ficha
 
 ###
-POST http://localhost:8000/Ficha
+POST http://localhost:8000/Aprendiz
 Content-Type: application/json
 
 {
@@ -29,8 +29,9 @@ Content-Type: application/json
   "telefono":"41243111"
 }
 
+
 ###
 
-DELETE http://localhost:8000/Aprendiz/1
+DELETE  http://localhost:8000/Aprendiz/1
 
 ### PROGRAMA
