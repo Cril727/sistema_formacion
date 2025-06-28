@@ -40,3 +40,7 @@ export const getProgramas = async (ctx:Context) => {
         }
     }
 }
+
+export const postPrograma = async (ctx:Context)=>{
+    
+}
