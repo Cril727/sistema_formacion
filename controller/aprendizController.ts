@@ -182,7 +182,7 @@ export const deleteAprendiz = async (ctx:RouterContext<"/Aprendiz/:id">) =>{
             response.status = 400
             response.body = {
                 success:false,
-                message:"ID del usuario es invalido"
+                message:"ID del aprendiz es invalido"
             };
 
             return;
@@ -195,7 +195,7 @@ export const deleteAprendiz = async (ctx:RouterContext<"/Aprendiz/:id">) =>{
             response.status = 200;
             response.body = {
                 success: true,
-                message: "Usuario elminado correctamente"
+                message: "Aprendiz elminado correctamente"
             }
         }else{
             response.status = 400;

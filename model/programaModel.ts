@@ -8,9 +8,11 @@ interface ProgramaData {
 export class Programa {
     public _objPrograma: ProgramaData | null;
 
+
     constructor(Objprograma: ProgramaData | null = null) {
         this._objPrograma = Objprograma;
     }
+
 
     public async listarPrograma(): Promise<ProgramaData[]> {
         try {
@@ -28,6 +30,7 @@ export class Programa {
             throw new Error("No se pueden traer los datos");
         }
     }
+
 
     public async agregarPrograma(): Promise<{ success: boolean; message: string; programa?: Record<string, unknown> }> {
         try {
@@ -74,6 +77,7 @@ export class Programa {
         }
     }
 
+
     public async actualizarPrograma(): Promise<{ success: boolean; message: string; programa?: Record<string, unknown>}> {
         try {
             if (!this._objPrograma || !this._objPrograma.idprograma) {
@@ -116,5 +120,38 @@ export class Programa {
             }
         }
     }
-    
+
+
+    public async eliminarPrograma(idprograma: number):Promise<{success:boolean, message:string}>{
+        try {
+            await Conexion.execute("START TRANSACTION");
+
+            const eliminar = await Conexion.execute("DELETE FROM programa WHERE idprograma = ?",[idprograma]);
+
+            if(eliminar && typeof eliminar.affectedRows === "number" && eliminar.affectedRows > 0){
+                await Conexion.execute("COMMIT");
+
+                return{
+                    success:true,
+                    message:"Programa eliminado correctamente"
+                }
+            }else{
+                throw new Error("Error al eliminar el programa")
+            }
+
+        } catch (error) {
+            await Conexion.execute("ROLLBACK");
+            if(error instanceof Error){
+                return{
+                    success:false,
+                    message:error.message
+                }
+            }else{
+                return{
+                    success:false,
+                    message:"Error interno del servidor"
+                }
+            }
+        }
+    }
 }
