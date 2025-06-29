@@ -1,4 +1,4 @@
-import { Context, z } from "../dependencies/dependencies.ts";
+import { Context, z, RouterContext } from "../dependencies/dependencies.ts";
 import { Programa } from "../model/programaModel.ts";
 
 const programaSchema = z.object({
@@ -44,6 +44,7 @@ export const getProgramas = async (ctx:Context) => {
         }
     }
 }
+
 
 export const postPrograma = async (ctx:Context)=>{
     const {response, request} = ctx;
@@ -101,4 +102,69 @@ export const postPrograma = async (ctx:Context)=>{
             }
         }
     }
+}
+
+
+export const putPrograma = async (ctx:Context)=>{
+    const { request, response} = ctx
+    try {
+
+        const contenLen = request.headers.get("Content-Length")
+
+        if(contenLen === "0"){
+            response.status = 400;
+            response.body = {
+                success:false,
+                messaje:"Cuerpo de la solicitud vacio"
+            }
+            return;
+        }
+
+        const body = await request.body.json();
+        const validated = programaSchema.parse(body)
+
+        const ProgramaData = {
+            idprograma: body.idprograma,
+            ...validated
+        }
+
+        const objPrograma = new Programa(ProgramaData);
+        const actualizar = await objPrograma.actualizarPrograma();
+
+        if(actualizar.success){
+            response.status = 200;
+            response.body = {
+                success:true,
+                message:"Programa actualizado correctamente",
+                programa: actualizar.programa
+            }
+        }else{
+            response.status = 400;
+            response.body = {
+                success:false,
+                message: "Error al actualizar el programa" + actualizar.message,
+            }
+        }
+        
+    } catch (error) {
+        if(error instanceof z.ZodError){
+            response.status = 400;
+            response.body = {
+                success:false,
+                message: "Error de servidor Datos invalidos",
+                errors: error.format()
+            }
+        }else{
+
+            response.status = 400;
+            response.body = {
+                success:false,
+                message: "Error de servidor Datos invalidos",
+            }
+        }
+    }
+}
+
+
+export const deletePrograma = async (ctx:RouterContext<"/programa/:id">)=>{
 }

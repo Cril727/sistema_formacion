@@ -7,3 +7,12 @@ Content-Type: application/json
 {
     "nombre_programa":"ADSO"
 }
+
+###
+PUT http://localhost:8000/programa
+Content-Type: application/json
+
+{
+    "idprograma":"2",
+    "nombre_programa":"Aso noche"
+}
