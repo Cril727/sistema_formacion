@@ -1,4 +1,3 @@
-import { error } from "node:console";
 import { Context, z, RouterContext } from "../dependencies/dependencies.ts";
 import { Programa } from "../model/programaModel.ts";
 
@@ -195,8 +194,7 @@ export const deletePrograma = async (ctx:RouterContext<"/programa/:id">)=>{
             response.status = 400;
             response.body = {
                 success:false,
-                message:"No se pudo eliminar el Programa",
-                error: String(error)
+                message:"No se pudo eliminar el Programa"
             }
         }
 
