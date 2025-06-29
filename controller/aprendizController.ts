@@ -158,7 +158,7 @@ export const putAprendiz = async(ctx:Context)=>{
             response.status = 400;
             response.body = {
                 success: false,
-                message: "Error de seervidor datos invalidos",
+                message: "Error de servidor datos invalidos",
                 errors: error.format()
             }
         }else{
