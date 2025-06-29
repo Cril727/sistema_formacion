@@ -1,3 +1,4 @@
+import { error } from "node:console";
 import { Context, z, RouterContext } from "../dependencies/dependencies.ts";
 import { Programa } from "../model/programaModel.ts";
 
@@ -167,4 +168,51 @@ export const putPrograma = async (ctx:Context)=>{
 
 
 export const deletePrograma = async (ctx:RouterContext<"/programa/:id">)=>{
+    const {params, response} = ctx
+    try {
+        
+        const idprograma = parseInt(params.id)
+
+        if(!idprograma || idprograma <= 0){
+            response.status = 400;
+            response.body = {
+                success:false,
+                message:"El ID del programa es invalido"
+            }
+            return;
+        }
+
+        const objPrograma = new Programa();
+        const eliminar = await objPrograma.eliminarPrograma(idprograma)
+
+        if(eliminar.success){
+            response.status = 200;
+            response.body = {
+                success:true,
+                message:"Programa eliminado Correctamente"
+            }
+        }else{
+            response.status = 400;
+            response.body = {
+                success:false,
+                message:"No se pudo eliminar el Programa",
+                error: String(error)
+            }
+        }
+
+    } catch (error) {
+        if(error instanceof Error){
+            response.status = 500;
+            response.body = {
+                success: false,
+                message: "Error interno del servidor" + error.message
+            }
+        }else{
+            response.status = 500;
+            response.body = {
+                success: false,
+                message: "Error interno del servidor"
+            }
+        }
+    }
 }

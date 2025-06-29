@@ -16,3 +16,7 @@ Content-Type: application/json
     "idprograma":"2",
     "nombre_programa":"Aso noche"
 }
+
+
+###
+DELETE  http://localhost:8000/programa/4
