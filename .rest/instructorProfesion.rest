@@ -1,1 +1,10 @@
 GET http://localhost:8000/InstructoresProfesiones
+
+###
+POST http://localhost:8000/InstructorProfesion
+Content-Type: application/json
+
+{
+  "instructorId": 2,
+  "profesionId": 5
+}
