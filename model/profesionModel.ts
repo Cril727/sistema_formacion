@@ -1,4 +1,3 @@
-import { error } from "node:console";
 import { Conexion } from "./Conexion.ts";
 
 interface ProfesionData {

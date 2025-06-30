@@ -5,7 +5,7 @@ POST http://localhost:8000/profesion
 Content-Type: application/json
 
 {
-    "nombre_profesion":"monda"
+    "nombre_profesion":"ING"
 }
 
 ###
