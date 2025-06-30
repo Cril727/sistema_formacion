@@ -1,4 +1,3 @@
-import { date } from "https://deno.land/x/zod@v3.24.1/types.ts";
 import { Context,z,RouterContext } from "../dependencies/dependencies.ts";
 import { Profesion } from "../model/profesionModel.ts";
 
