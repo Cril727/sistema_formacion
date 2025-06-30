@@ -16,3 +16,6 @@ Content-Type: application/json
   "idprofesion": "3",
   "nombre_profesion": "Diseño Gráfico"
 }
+
+###
+DELETE  http://localhost:8000/profesion/4

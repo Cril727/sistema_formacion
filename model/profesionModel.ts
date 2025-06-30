@@ -105,6 +105,7 @@ export class Profesion{
             }
 
         } catch (error) {
+            await Conexion.execute("ROLLBACK")
             if(error instanceof Error){
                 return{
                     success:false,
@@ -114,6 +115,38 @@ export class Profesion{
                 return{
                     success:false,
                     message:"Error de servidor"
+                }
+            }
+        }
+    }
+
+
+    public async eliminarProfesion(idprofesion:number):Promise<{success:boolean,message:string}>{
+        try {
+            await Conexion.execute("START TRANSACTION");
+            const eliminar = await Conexion.execute("DELETE FROM profesion WHERE idprofesion = ?",[idprofesion])
+
+            if(eliminar && typeof eliminar.affectedRows === "number" && eliminar.affectedRows > 0){
+                await Conexion.execute("COMMIT")
+
+                return{
+                    success:true,
+                    message:"Profesion eliminada correctamente"
+                }
+            }else{
+                throw new Error("Error al eliminar la profesion")
+            }
+        } catch (error) {
+            await Conexion.execute("ROLLBACK")
+            if(error instanceof Error){
+                return{
+                    success:false,
+                    message: error.message
+                }
+            }else{
+                return{
+                    success:false,
+                    message:"Error interno al eliminar la profesion"
                 }
             }
         }
