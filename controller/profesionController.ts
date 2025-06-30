@@ -55,7 +55,7 @@ export const postProfesion = async (ctx:Context)=>{
     const {request, response} = ctx
 
     try {
-        const contentLen = request.headers.get("ContenetLengh")
+        const contentLen = request.headers.get("Content-Length")
 
         if(contentLen === "0"){
             response.status = 400;
@@ -112,7 +112,63 @@ export const postProfesion = async (ctx:Context)=>{
 
 
 export const putProfesion = async (ctx:Context)=>{
-    
+    const {request, response} = ctx
+
+    try {
+        const contenLen = request.headers.get("Content-Length");
+
+        if(contenLen === "0"){
+            response.status = 400;
+            response.body = {
+                success:false,
+                message:"El cuerpo de la solicitud esta vacio"
+            }
+            return;
+        }
+
+        const body = await request.body.json();
+        const validated = programaSchema.parse(body);
+
+        const dataProfesion = {
+            idprofesion : body.idprofesion,
+            ...validated
+        }
+
+        const objProfesion = new Profesion(dataProfesion);
+        const update = await objProfesion.actualizarProfesion();
+
+        if(update.success){
+            response.status = 200;
+            response.body = {
+                success:update.success,
+                message:"Profesion actualizada Correctamente",
+                profesion: update.profesion
+            }
+        }else{
+            response.status = 400;
+            response.body = {
+                success: update.success,
+                message: "No se pudo actualizar la profesion"
+            }
+        }
+
+    } catch (error) {
+        if(error instanceof z.ZodError){
+            response.status = 400;
+            response.body = {
+                success: false,
+                message: "Datos invalidos",
+                errors: error.format()
+            }
+        }else{
+            response.status = 500;
+            response.body = {
+                success: false,
+                message: "Error del servidor",
+                error: String(error)
+            }
+        }
+    }
 }
 
 

@@ -1,3 +1,4 @@
+import { error } from "node:console";
 import { Conexion } from "./Conexion.ts";
 
 interface ProfesionData {
@@ -58,6 +59,53 @@ export class Profesion{
             }
         } catch (error) {
             await Conexion.execute("ROLLBACK")
+            if(error instanceof Error){
+                return{
+                    success:false,
+                    message: error.message
+                }
+            }else{
+                return{
+                    success:false,
+                    message:"Error de servidor"
+                }
+            }
+        }
+    }
+
+
+    public async actualizarProfesion():Promise<{success:boolean, message:string, profesion?: Record<string,unknown>}>{
+        try {
+
+            if(!this._objProfesion || !this._objProfesion.idprofesion){
+                throw new Error("Objeto no valido o Id no valido")
+            }
+
+            const {idprofesion,nombre_profesion} = this._objProfesion; 
+
+            await Conexion.execute("START TRANSACTION");
+            const update = await Conexion.execute(
+                "UPDATE profesion SET nombre_profesion = ? WHERE idprofesion = ?"
+                ,[
+                    nombre_profesion,
+                    idprofesion
+                ],);
+
+            if(update && typeof update.affectedRows === "number" && update.affectedRows > 0){
+                const [profesion] = await Conexion.query("SELECT * FROM profesion WHERE idprofesion = ?",[idprofesion],)
+
+                await Conexion.execute("COMMIT");
+
+                return{
+                    success:true,
+                    message:"Profesion actualizada correctamente",
+                    profesion:profesion
+                }
+            }else{
+                throw new Error("Error al actualizar la profesion")
+            }
+
+        } catch (error) {
             if(error instanceof Error){
                 return{
                     success:false,
