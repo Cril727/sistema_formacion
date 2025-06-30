@@ -1,4 +1,4 @@
-import { Context } from "../dependencies/dependencies.ts";
+import { Context, RouterContext } from "../dependencies/dependencies.ts";
 import { InstructorProfesion } from "../model/instructorProfesionModel.ts";
 
 export const getInstructorProfesion = async (ctx: Context) => {
@@ -40,7 +40,6 @@ export const getInstructorProfesion = async (ctx: Context) => {
         }
     }
 }
-
 
 
 export const postInstructoresProfesiones = async (ctx: Context) => {
@@ -142,5 +141,56 @@ export const putInstructoresProfesiones = async (ctx:Context)=>{
             success: false,
             message: "Error interno del servidor"
         };
+    }
+}
+
+
+export const deleteInstructoresProfesiones = async (ctx:RouterContext<"/InstructorProfesion/:instructorId/:profesionId">)=>{
+    const {params, response} = ctx;
+
+    try {
+        const instructorId = Number(params.instructorId);
+        const profesionId  = Number(params.profesionId);
+
+        if(!instructorId || !profesionId || profesionId <= 0 || instructorId <= 0){
+            response.status = 400
+            response.body = {
+                success:false,
+                message:"ID del aprendiz es invalido"
+            };
+
+            return;
+        }
+
+        const objInstructorProfesion = new InstructorProfesion();
+        const eliminar = await objInstructorProfesion.eliminarInstructorProfesion(instructorId,profesionId);
+
+        if(eliminar.success){
+            response.status = 200;
+            response.body = {
+                success: true,
+                message: "Aprendiz elminado correctamente"
+            }
+        }else{
+            response.status = 400;
+            response.body = {
+                success: false,
+                message: "Erro al eliminar el usuario" + eliminar.message
+            }
+        }
+    } catch (error) {
+        if(error instanceof Error){
+            response.status = 500;
+            response.body = {
+                success: false,
+                message: "Error interno del servidor" + error.message
+            }
+        }else{
+            response.status = 500;
+            response.body = {
+                success: false,
+                message: "Error interno del servidor"
+            }
+        }
     }
 }
