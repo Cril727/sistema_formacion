@@ -174,4 +174,50 @@ export const putProfesion = async (ctx:Context)=>{
 
 export const deleteProfesion = async (ctx:RouterContext<"/profesion/:id">)=>{
     
+    const {params, response} = ctx;
+
+    try {
+        const idprofesion = parseInt(params.id);
+
+        if(!idprofesion || idprofesion < 0){
+            response.status = 400;
+            response.body = {
+                success: false, 
+                message:"ID de la profesion invalido"
+            }
+            return;
+        }
+
+
+        const objProfesion = new Profesion();
+        const eliminar  = await objProfesion.eliminarProfesion(idprofesion);
+
+        if(eliminar.success){
+            response.status = 200;
+            response.body = {
+                success:true,
+                message:"Profesion eliminada correctamente"
+            }
+        }else{
+            response.status = 400;
+            response.body = {
+                success:true,
+                message:"No se ha podido eliminar la profesion Profesion " + eliminar.message
+            }
+        }
+    } catch (error) {
+        if(error instanceof Error){
+            response.status = 400;
+            response.body = {
+                success:true,
+                message:error.message
+            }
+        }else{
+            response.status = 500;
+            response.body = {
+                success:true,
+                message:"Error del servidor"
+            }
+        }
+    }
 }
