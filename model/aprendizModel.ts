@@ -29,7 +29,7 @@ export class Aprendiz {
 
             return result.rows as AprendizData[];
         } catch (error) {
-            console.error("Error al seleccionaer usuario" + error);
+            console.error("Error al seleccionar los aprendices" + error);
             throw new Error("No se pueden obtener los datos")
         }
     }
