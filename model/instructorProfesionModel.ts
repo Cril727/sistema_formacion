@@ -153,14 +153,53 @@ export class InstructorProfesion {
       }
     } catch (error) {
       await Conexion.execute("ROLLBACK");
-      
+
       if (error instanceof Error) {
         return { success: false, message: error.message };
       } else {
         return {success: false,message: "Error del servidor al actualizar relación",};
       }
     }
-  }
+    }
+
+
+    public async eliminarInstructorProfesion(instructor_idinstructor:number, profesion_idprofesion:number):Promise<{success:boolean, message:string}>{
+    try {
+        await Conexion.execute("START TRANSACTION");
+
+        const eliminar = await Conexion.execute(
+        `DELETE FROM instructor_has_profesion
+         WHERE instructor_idinstructor = ?
+           AND profesion_idprofesion = ?`,
+        [instructor_idinstructor, profesion_idprofesion],
+        );
+
+       if(eliminar && typeof eliminar.affectedRows === "number" && eliminar.affectedRows>0){
+            await Conexion.execute("COMMIT");
+
+            return{
+             success:true,
+             message:"Relacion entre instructor y profesion eliminada"
+            }
+       }else{
+        throw new Error("Error al eliminar la relacion")
+       }
+    } catch (error) {
+        await Conexion.execute("ROLLBACK");
+        if(error instanceof Error){
+            return{
+                success:false,
+                message:error.message
+            }
+        }else{
+            return{
+            success:false,
+            message:"Error interno del servidor"
+            }
+        }
+    }
+    }
+
 }
 
 
