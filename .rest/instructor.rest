@@ -1,0 +1,28 @@
+### Obtener todos los instructores
+GET http://localhost:8000/Instructores
+
+### Crear un instructor
+POST http://localhost:8000/Instructor
+Content-Type: application/json
+
+{
+  "nombre": "Laura",
+  "apellido": "García",
+  "email": "laura.garcia@sena.edu.co",
+  "telefono": "3216549870"
+}
+
+### Actualizar un instructor
+PUT http://localhost:8000/Instructor
+Content-Type: application/json
+
+{
+  "idinstructor": 1,
+  "nombre": "Lauren",
+  "apellido": "Ramírez",
+  "email": "laura.ramirez@sena.edu.co",
+  "telefono": "3201234567"
+}
+
+### Eliminar un instructor
+DELETE http://localhost:8000/Instructor/6

@@ -28,6 +28,7 @@ export class Ficha {
 
 
   public async agregarFicha(): Promise<{success:boolean, message: string, ficha?: Record<string,unknown> }>{
+
         try {
             if (!this._objFicha) {
                 throw new Error("Objeto no valido")
@@ -69,6 +70,10 @@ export class Ficha {
         }
     }
 
+  public async actualizarFicha(){
+    
+  }  
+
  
 
   public async eliminarFicha(idficha: number): Promise<{ success: boolean; message: string }> {
@@ -88,4 +93,5 @@ export class Ficha {
     }
   }
 }
+
 

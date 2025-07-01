@@ -4,7 +4,7 @@ import { getAprendiz,postAprendiz,putAprendiz,deleteAprendiz } from '../controll
 
 const AprendizRouter = new Router();
 
-AprendizRouter.get("/Aprendices",getAprendiz)
+AprendizRouter.get("/Aprendiz",getAprendiz)
 AprendizRouter.post("/Aprendiz",postAprendiz)
 AprendizRouter.put("/Aprendiz",putAprendiz)
 AprendizRouter.delete("/Aprendiz/:id",deleteAprendiz)

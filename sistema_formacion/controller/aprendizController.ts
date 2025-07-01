@@ -158,7 +158,7 @@ export const putAprendiz = async(ctx:Context)=>{
             response.status = 400;
             response.body = {
                 success: false,
-                message: "Error de servidor datos invalidos",
+                message: "Error de seervidor datos invalidos",
                 errors: error.format()
             }
         }else{
@@ -182,7 +182,7 @@ export const deleteAprendiz = async (ctx:RouterContext<"/Aprendiz/:id">) =>{
             response.status = 400
             response.body = {
                 success:false,
-                message:"ID del aprendiz es invalido"
+                message:"ID del usuario es invalido"
             };
 
             return;
@@ -195,7 +195,7 @@ export const deleteAprendiz = async (ctx:RouterContext<"/Aprendiz/:id">) =>{
             response.status = 200;
             response.body = {
                 success: true,
-                message: "Aprendiz elminado correctamente"
+                message: "Usuario elminado correctamente"
             }
         }else{
             response.status = 400;
