@@ -1,31 +1,86 @@
-GET http://localhost:8000/Aprendiz
+### Obtener todas las fichas
+GET http://localhost:8000/Ficha
 
 
-###
-POST http://localhost:8000/Aprendiz
+### Crear una ficha
+POST http://localhost:8000/Ficha
 Content-Type: application/json
 
 {
-    "nombre":"Julian",
-    "apellido":"Chaparro",
-    "email":"jc@gmail.com",
-    "telefono":"31243111"
+  "codigo": "hh",
+  "fecha_inicio_lectiva": "20215-08-01",
+  "fecha_fin_lectiva": "20126-01-31",
+  "fecha_fin_practica": "21026-03-30",
+  "programa_idprograma": 1
 }
 
-###
-
-PUT http://localhost:8000/Aprendiz
+### Actualizar una ficha
+PUT http://localhost:8000/Ficha
 Content-Type: application/json
 
 {
-    "idaprendiz":"4",
-    "nombre":"cr7",
-    "apellido":"sdf",
-    "email":"jcddd@gmail.com",
-    "telefono":"41243111"
+  "idficha": 1,
+  "codigo": "FICHA002-CTUALIZADA",
+  "fecha_inicio_lectiva": "2025-09-01",
+  "fecha_fin_lectiva": "2024-02-28",
+  "fecha_fin_practica": "2026-04-15",
+  "programa_idprograma": 1
 }
 
+### Eliminar una ficha
+DELETE http://localhost:8000/Ficha/3
 
-###
 
-DELETE  http://localhost:8000/Aprendiz/1
+
+
+
+
+### Obtener todas las relaciones
+GET http://localhost:8000/Relacion
+
+
+### Crear una relación ficha - aprendiz - instructor
+POST http://localhost:8000/Relacion
+Content-Type: application/json
+
+{
+  "ficha_idficha": 1,
+  "aprendiz_idaprendiz": 2,
+  "instructor_idinstructor": 1
+}
+
+### Eliminar una relación ficha - aprendiz
+DELETE http://localhost:8000/Relacion/1/2
+
+
+
+
+### Obtener todos los instructores
+GET http://localhost:8000/Instructores
+
+
+### Crear un instructor
+POST http://localhost:8000/Instructor
+Content-Type: application/json
+
+{
+  "nombre": "Laura",
+  "apellido": "García",
+  "email": "laura.garcia@sena.edu.co",
+  "telefono": "3216549870"
+}
+
+### Actualizar un instructor
+PUT http://localhost:8000/Instructor
+Content-Type: application/json
+
+{
+  "idinstructor": 1,
+  "nombre": "Lauren",
+  "apellido": "Ramírez",
+  "email": "laura.ramirez@sena.edu.co",
+  "telefono": "3201234567"
+}
+
+### Eliminar un instructor
+DELETE http://localhost:8000/Instructor/6
