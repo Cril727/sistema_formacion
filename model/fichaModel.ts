@@ -1,43 +1,34 @@
 import { Conexion } from "./Conexion.ts";
 
-
 interface FichaData {
-    idficha: number | null;
-    codigo: string,
-    fecha_inicio_lectiva:string,
-    fecha_fin_lectiva:string,
-    fecha_fin_practica:string,
-    programa_idprograma: number | null;
+  idficha: number | null;
+  codigo: string;
+  fecha_inicio_lectiva: string;
+  fecha_fin_lectiva: string;
+  fecha_fin_practica: string;
+  programa_idprograma: number;
 }
 
-
-
 export class Ficha {
-    public _objFicha: FichaData | null;
+  public _objFicha: FichaData | null;
 
-    constructor(objFicha: FichaData | null = null){
-        this._objFicha = objFicha
+  constructor(objFicha: FichaData | null = null) {
+    this._objFicha = objFicha;
+  }
+
+  public async listarFichas(): Promise<FichaData[]> {
+    try {
+      const result = await Conexion.execute("SELECT * FROM ficha");
+      return (result?.rows || []) as FichaData[];
+    } catch (error) {
+      console.error("Error al seleccionar fichas", error);
+      throw new Error("No se pueden obtener los datos");
     }
+  }
 
-    
-    public async listarFichas(): Promise<FichaData[]>{
-        try {
-            const result = await Conexion.execute("SELECT * FROM ficha")
 
-            if (!result || !result.rows) {
-                console.warn("La consulta no devuelve datos");
-                return[];
-            }
+  public async agregarFicha(): Promise<{success:boolean, message: string, ficha?: Record<string,unknown> }>{
 
-            return result.rows as FichaData[];
-        } catch (error) {
-            console.error("Error al seleccionar ficha" + error);
-            throw new Error("No se pueden obtener los datos")
-            
-        }
-    }
-    
-    public async agregarFicha(): Promise<{success:boolean, message: string, ficha?: Record<string,unknown> }>{
         try {
             if (!this._objFicha) {
                 throw new Error("Objeto no valido")
@@ -79,5 +70,28 @@ export class Ficha {
         }
     }
 
-   
+  public async actualizarFicha(){
+    
+  }  
+
+ 
+
+  public async eliminarFicha(idficha: number): Promise<{ success: boolean; message: string }> {
+    try {
+      await Conexion.execute("START TRANSACTION");
+      const eliminar = await Conexion.execute("DELETE FROM ficha WHERE idficha = ?", [idficha]);
+
+      if (eliminar && eliminar.affectedRows && eliminar.affectedRows > 0) {
+        await Conexion.execute("COMMIT");
+        return { success: true, message: "Ficha eliminada correctamente" };
+      } else {
+        throw new Error("Error al eliminar la ficha");
+      }
+    } catch (error) {
+      await Conexion.execute("ROLLBACK");
+      return { success: false, message: error instanceof Error ? error.message : "Error interno del servidor" };
+    }
+  }
 }
+
+

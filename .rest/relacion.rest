@@ -1,0 +1,20 @@
+
+
+### Obtener todas las relaciones
+GET http://localhost:8000/Relacion
+
+
+### Crear una relación ficha - aprendiz - instructor
+POST http://localhost:8000/Relacion
+Content-Type: application/json
+
+{
+  "ficha_idficha": 1,
+  "aprendiz_idaprendiz": 2,
+  "instructor_idinstructor": 1
+}
+
+### Eliminar una relación ficha - aprendiz
+DELETE http://localhost:8000/Relacion/1/2
+
+
