@@ -6,9 +6,9 @@ POST http://localhost:8000/Instructor
 Content-Type: application/json
 
 {
-  "nombre": "Laura",
+  "nombre": "cris",
   "apellido": "Garcías",
-  "email": "laura.garcias@sena.edu.co",
+  "email": "cris.garcias@sena.edu.co",
   "telefono": "3216549870"
 }
 
@@ -17,12 +17,12 @@ PUT http://localhost:8000/Instructor
 Content-Type: application/json
 
 {
-  "idinstructor": 7,
-  "nombre": "Lauren",
-  "apellido": "Ramírez",
-  "email": "laura.ramirez@sena.edu.co",
+  "idinstructor": 8,
+  "nombre": "cristina",
+  "apellido": "garcia",
+  "email": "cris.R@sena.edu.co",
   "telefono": "3201234567"
 }
 
 ### Eliminar un instructor
-DELETE http://localhost:8000/Instructor/7
+DELETE http://localhost:8000/Instructor/8
