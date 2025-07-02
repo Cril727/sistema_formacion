@@ -9,12 +9,23 @@ POST http://localhost:8000/Relacion
 Content-Type: application/json
 
 {
-  "ficha_idficha": 1,
-  "aprendiz_idaprendiz": 2,
-  "instructor_idinstructor": 1
+  "ficha_idficha": 9,
+  "aprendiz_idaprendiz": 3,
+  "instructor_idinstructor": 9
 }
 
+### Archivo: routes.ts o similar (donde defines tus rutas)
+PUT http://localhost:8000/Relacion
+Content-Type: application/json
+
+{
+  "fichaId":     9,
+  "aprendizId":  3,
+  "instructorId": 5
+}
+
+
 ### Eliminar una relación ficha - aprendiz
-DELETE http://localhost:8000/Relacion/1/2
+DELETE http://localhost:8000/Relacion/9/3/5
 
 
