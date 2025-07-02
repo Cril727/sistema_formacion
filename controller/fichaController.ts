@@ -6,7 +6,7 @@ const FichaSchema = z.object({
   fecha_inicio_lectiva: z.string().min(1, "La fecha de inicio lectiva es obligatoria"),
   fecha_fin_lectiva: z.string().min(1, "La fecha de fin lectiva es obligatoria"),
   fecha_fin_practica: z.string().min(1, "La fecha del fin de prácticas es obligatoria"),
-  programa_idprograma: z.string().min(1)
+  programa_idprograma: z.number().min(1)
 });
 
 export const getFicha = async (ctx: Context) => {
@@ -100,51 +100,51 @@ export const postFicha = async (ctx:Context)=>{
 
 }
 
-// export const putFicha = async (ctx: Context) => {
-//   const { response, request } = ctx;
-//   try {
-//     const contenLen = request.headers.get("Content-Length");
-//     if (contenLen === "0") {
-//       response.status = 400;
-//       response.body = {
-//         success: false,
-//         message: "Cuerpo de la solicitud vacío"
-//       };
-//       return;
-//     }
+export const putFicha = async (ctx: Context) => {
+  const { response, request } = ctx;
+  try {
+    const contenLen = request.headers.get("Content-Length");
+    if (contenLen === "0") {
+      response.status = 400;
+      response.body = {
+        success: false,
+        message: "Cuerpo de la solicitud vacío"
+      };
+      return;
+    }
 
-//     const body = await request.body.json();
-//     const fichaData = {
-//       ...body,
-//       programa_idprograma: Number(body.programa_idprograma),
-//       idficha: Number(body.idficha)
-//     };
+    const body = await request.body.json();
+    const fichaData = {
+      ...body,
+      programa_idprograma: Number(body.programa_idprograma),
+      idficha: Number(body.idficha)
+    };
 
-//     const objFicha = new Ficha(fichaData);
-//     const update = await objFicha.actualizarFicha();
+    const objFicha = new Ficha(fichaData);
+    const update = await objFicha.actualizarFicha();
 
-//     if (update.success) {
-//       response.status = 200;
-//       response.body = {
-//         success: true,
-//         message: "Actualizado correctamente",
-//         ficha: update.ficha
-//       };
-//     } else {
-//       response.status = 400;
-//       response.body = {
-//         success: false,
-//         message: "Error al actualizar la ficha: " + update.message
-//       };
-//     }
-//   } catch (error) {
-//     response.status = 500;
-//     response.body = {
-//       success: false,
-//       message: "Error interno del servidor"
-//     };
-//   }
-// };
+    if (update.success) {
+      response.status = 200;
+      response.body = {
+        success: true,
+        message: "Actualizado correctamente" + String(update.ficha),
+        ficha: update.ficha
+      };
+    } else {
+      response.status = 400;
+      response.body = {
+        success: false,
+        message: "Error al actualizar la ficha: " + update.message
+      };
+    }
+  } catch (error) {
+    response.status = 500;
+    response.body = {
+      success: false,
+      message: "Error interno del servidor"
+    };
+  }
+};
 
 export const deleteFicha = async (ctx: RouterContext<"/Ficha/:id">) => {
   const { params, response } = ctx;
